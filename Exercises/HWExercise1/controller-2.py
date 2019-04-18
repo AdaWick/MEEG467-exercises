@@ -8,8 +8,8 @@ class Controller():
         self.k_P = 1
         self.k_I = 0
 
-        # Variable for integral
-        self.C_I = 0
+        # Initialize integral
+        self.I = 0
 
     # Inputs:   d_est   Estimation of distance from lane center (positve when
     #                   offset to the left of driving direction) [m]
@@ -30,13 +30,8 @@ class Controller():
         y =     (6 * d_est + 1 * phi_est)
         err = ref - y
 
-        # PI-Controller
-        C_P = self.k_P * err
-        omega = C_P + self.C_I
-
-        # Calculate the new value of the integral
-        self.C_I = self.C_I + dt_last * self.k_I * err
-
+        # PI-Controller (edit this!)
+        omega = 0
 
         # Declaring return values
         omega_out = omega
