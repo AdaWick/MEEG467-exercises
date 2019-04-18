@@ -27,7 +27,7 @@ class Controller():
         y =     (6 * d_est + 1 * phi_est)
         err = ref - y
         
-        # Native P-Controller
+        # P-Controller
         C_P = self.k_P * err
         omega = C_P
 
