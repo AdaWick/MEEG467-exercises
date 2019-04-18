@@ -7,8 +7,8 @@ class Controller():
     def __init__(self):
 
         # Gains for controller
-        self.k_P = 3.5
-        self.k_I = 2
+        self.k_P = 1
+        self.k_I = 0
 
         # Saturation of motors [rad/s]
         self.u_sat = 2
@@ -16,8 +16,8 @@ class Controller():
         # Feedback gain for anti-windup
         self.k_t = 0
 
-        # Variable for integral
-        self.C_I = 0
+        # Initialize integral
+        self.I = 0
 
     # Inputs:   d_est   Estimation of distance from lane center (positve when
     #                   offset to the left of driving direction) [m]
@@ -38,22 +38,10 @@ class Controller():
         y =     (6 * d_est + 1 * phi_est)
         err = ref - y
 
-        # PI-Controller
-        C_P = self.k_P * err
-        omega = C_P + self.C_I
-
-        # Calculate new value of integral while considering the anti-windup
-        self.C_I = self.C_I + dt_last * ( self.k_I * err + self.k_t * ( self.sat(omega) - omega ) )
+        # PI-Controller with anti-windup (edit this!)
+        omega = 0
 
         # Declaring return values
         omega_out = omega
         v_out = v_ref
-        return (v_out, omega_out)
-
-    # Defining the saturation function of the motors
-    def sat(self, u):
-        if u > self.u_sat:
-            return self.u_sat
-        if u < -self.u_sat:
-            return -self.u_sat
-        return u
+        return (v_out, omega_out
